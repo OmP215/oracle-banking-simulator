@@ -23,3 +23,4 @@ HOW TO RUN
     5. Result Verification
        a. Check the alerts: select * from fraud_alerts; to see the results of the automated security logic
        b. Check the history: select * from account_audit_log; tp verify the paper trail of balance changes# oracle-banking-simulator
+

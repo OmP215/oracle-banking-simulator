@@ -1,0 +1,4 @@
+# Oracle Banking Simulator Dependencies
+oracledb>=2.0.0
+Faker>=22.0.0
+python-dotenv>=1.0.0

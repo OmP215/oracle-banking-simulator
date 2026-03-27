@@ -1,17 +1,32 @@
---------------------------------------------------------
---  File created - Tuesday-February-03-2026   
---------------------------------------------------------
---------------------------------------------------------
---  DDL for Trigger TRG_AUDIT_BALANCE
---------------------------------------------------------
+/*
+ * TRG_AUDIT_BALANCE - Balance Change Audit Trigger
+ *
+ * Purpose:
+ *   Automatically logs all balance changes to the account_audit_log table.
+ *   This creates a complete audit trail for compliance and debugging.
+ *
+ * Trigger Type: AFTER UPDATE
+ * Table: accounts
+ * Column: balance
+ *
+ * Behavior:
+ *   For each balance update, records:
+ *   - Account ID
+ *   - Old balance value
+ *   - New balance value
+ *   - User who made the change
+ *   - Timestamp (automatic via DEFAULT)
+ */
 
-  CREATE OR REPLACE EDITIONABLE TRIGGER "BANKING_ADMIN"."TRG_AUDIT_BALANCE" 
-after update of balance on accounts 
-for each row
-begin
-    insert into account_audit_log (account_id, old_balance, new_balance, changed_by)
-    values (:OLD.account_id, :OLD.balance, :NEW.balance, USER);
-end;
-
+CREATE OR REPLACE TRIGGER TRG_AUDIT_BALANCE
+AFTER UPDATE OF balance ON accounts
+FOR EACH ROW
+BEGIN
+    INSERT INTO account_audit_log (account_id, old_balance, new_balance, changed_by)
+    VALUES (:OLD.account_id, :OLD.balance, :NEW.balance, USER);
+END;
 /
-ALTER TRIGGER "BANKING_ADMIN"."TRG_AUDIT_BALANCE" ENABLE;
+
+-- Enable the trigger
+ALTER TRIGGER TRG_AUDIT_BALANCE ENABLE;
+/
